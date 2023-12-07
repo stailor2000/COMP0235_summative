@@ -1,0 +1,10 @@
+---
+- name: Configure SSH Key on Client Nodes
+  hosts: clients
+  become: yes
+  tasks:
+    - name: Copy SSH public key to remote machine
+      authorized_key:
+        user: ec2-user
+        key: "{{ lookup('file', '~/.ssh/id_cluster.pub') }}"
+
