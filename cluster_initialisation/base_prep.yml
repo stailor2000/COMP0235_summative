@@ -1,0 +1,20 @@
+---
+- name: Update packages and install basic tools
+  hosts: clients
+  become: yes
+  tasks:
+    - name: Update package cache
+      yum:
+        name: "*"
+        state: latest
+      tags: update_packages
+
+    - name: Install necessary tools
+      yum:
+        name:
+          - curl
+          - wget
+          - git
+        state: present
+      tags: install_tools
+

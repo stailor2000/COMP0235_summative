@@ -1,10 +1,20 @@
 ---
-- name: Configure SSH Key on Client Nodes
+- name: Transfer and Add New SSH Public Key to Client Nodes
   hosts: clients
   become: yes
+  vars:
+    new_public_key: ~/.ssh/id_cluster.pub
+
   tasks:
-    - name: Copy SSH public key to remote machine
+    - name: Ensure .ssh directory exists
+      file:
+        path: "~/.ssh"
+        state: directory
+        mode: '0700'
+
+    - name: Copy New SSH Public Key to Client Nodes
       authorized_key:
-        user: ec2-user
-        key: "{{ lookup('file', '~/.ssh/id_cluster.pub') }}"
+        user: "{{ ansible_user }}"
+        state: present
+        key: "{{ lookup('file', new_public_key) }}"
 
