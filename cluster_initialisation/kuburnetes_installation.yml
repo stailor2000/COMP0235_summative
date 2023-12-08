@@ -1,0 +1,37 @@
+---
+- name: Install Kubernetes Components on RHEL
+  hosts: all
+  become: true
+  tasks:
+    - name: Add Kubernetes YUM repository
+      yum_repository:
+        name: kubernetes
+        description: Kubernetes YUM repository
+        baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+        enabled: yes
+        gpgcheck: yes
+        repo_gpgcheck: yes
+        gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+
+    - name: Install Kubeadm, Kubelet, and Kubectl
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - kubeadm
+        - kubelet
+        - kubectl
+      notify:
+        - restart kubelet
+
+    - name: Ensure kubelet is enabled and started
+      systemd:
+        name: kubelet
+        enabled: yes
+        state: started
+
+  handlers:
+    - name: restart kubelet
+      systemd:
+        name: kubelet
+        state: restarted
