@@ -27,6 +27,15 @@
         state: started
         enabled: yes
 
+    - name: Open port 22 (SSH) for Ansible on client nodes
+      ansible.builtin.firewalld:
+        port: "{{ item }}"
+        state: enabled
+        permanent: yes
+        immediate: yes
+      with_items:
+        - 22/tcp
+
     - name: Open necessary ports for client nodes for Kubernetes
       ansible.builtin.firewalld:
         port: "{{ item }}"
