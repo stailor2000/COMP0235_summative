@@ -1,0 +1,28 @@
+---
+- name: Mount Additional Disks
+  hosts: clients
+  become: yes  # Run tasks with sudo
+  tasks:
+    - name: Create a filesystem on the additional disk
+      command: mkfs -t ext4 /dev/nvme1n1
+      ignore_errors: yes  # Ignore errors if filesystem already exists
+
+    - name: Create a mount point directory
+      file:
+        path: /mnt/data
+        state: directory
+
+    - name: Mount the additional disk
+      mount:
+        path: /mnt/data
+        src: /dev/nvme1n1
+        fstype: ext4
+        state: mounted
+        opts: defaults
+
+    - name: Add entry to /etc/fstab for permanent mounting
+      lineinfile:
+        path: /etc/fstab
+        line: "/dev/nvme1n1  /mnt/data  ext4  defaults  0 0"
+      when: not (ansible_mounts | selectattr('device', '==', '/dev/nvme1n1') | list)
+
