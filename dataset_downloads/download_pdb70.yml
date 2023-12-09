@@ -1,0 +1,39 @@
+---
+- name: Download, Install tar, and Unzip File on Client Nodes
+  hosts: clients
+  become: yes
+  tasks:
+    - name: Install tar
+      package:
+        name: tar
+        state: present
+
+    - name: Download the file using curl
+      command: >
+        curl -o /mnt/data/pdb70_from_mmcif_latest.tar.gz "https://wwwuser.gwdg.de/~compbiol/data/hhsuite/databases/hhsuite_dbs/pdb70_from_mmcif_latest.tar.gz"
+      args:
+        creates: /mnt/data/pdb70_from_mmcif_latest.tar.gz
+
+    - name: Create directory for pdb70
+      ansible.builtin.file:
+        path: "/mnt/data/pdb70"
+        state: directory
+
+    - block:
+        - name: Unzip the file
+          command: >
+            tar -xzvf /mnt/data/pdb70_from_mmcif_latest.tar.gz -C /mnt/data/pdb70
+          register: tar_result
+          ignore_errors: yes
+
+        - name: Delete the zip file
+          file:
+            path: "/mnt/data/pdb70_from_mmcif_latest.tar.gz"
+            state: absent
+          when: tar_result is defined and tar_result.rc == 0
+
+      rescue:
+        - name: Unzip Failed
+          debug:
+            msg: "The unzipping process failed."
+
