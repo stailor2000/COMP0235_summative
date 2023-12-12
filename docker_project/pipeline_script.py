@@ -21,9 +21,9 @@ def run_hhsearch(a3m_file):
     """
     Run HHSearch to produce the hhr file
     """
-    cmd = ['/home/dbuchan/Applications/hh-suite-3.3.0/build/bin/hhsearch',
+    cmd = ['/hhsuite/bin/hhsearch',
            '-i', a3m_file, '-cpu', '1', '-d', 
-           '/home/dbuchan/Data/hhdb/pdb70/pdb70']
+           '/data/pdb70/pdb70']
     print(f'STEP 3: RUNNING HHSEARCH: {" ".join(cmd)}')
     p = Popen(cmd, stdin=PIPE,stdout=PIPE, stderr=PIPE)
     out, err = p.communicate()
