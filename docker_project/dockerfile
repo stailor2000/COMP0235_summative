@@ -1,41 +1,42 @@
-# Python base image
-FROM python:3.8
+# Base image
+FROM ubuntu:latest
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
+    wget \
     git \
     tar \
     bzip2 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Miniconda
-ENV MINICONDA_VERSION 4.10.3
-ENV CONDA_DIR /opt/conda
-ENV PATH $CONDA_DIR/bin:$PATH
+# Install Miniconda and set up the environment
+RUN mkdir -p ~/miniconda3 \
+    && wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh \
+    && /bin/bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 \
+    && rm -rf ~/miniconda3/miniconda.sh \
+    && ~/miniconda3/bin/conda init bash
 
-RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-py38_$MINICONDA_VERSION-Linux-x86_64.sh -O ~/miniconda.sh \
-    && /bin/bash ~/miniconda.sh -b -p $CONDA_DIR \
-    && rm ~/miniconda.sh \
-    && conda clean -tipsy \
-    && conda init bash \
-    && . /root/.bashrc
+# Set environment variables
+ENV PATH /root/miniconda3/bin:$PATH
 
-# Install python packages
-RUN conda install -c conda-forge -c bioconda hhsuite
-RUN conda install -c conda-forge biopython
-RUN conda install -c conda-forge numpy
-RUN conda install -c anaconda pandas
-RUN conda install -c anaconda scipy
-RUN conda install -c pytorch pytorch
+# Create a conda environment with Python 3.8 and install packages
+RUN conda create -n myenv python=3.8 -y && \
+    echo "source activate myenv" > ~/.bashrc && \
+    /bin/bash -c "source activate myenv && \
+    conda install -c conda-forge -c bioconda hhsuite biopython numpy && \
+    conda install -c anaconda pandas scipy && \
+    conda install -c pytorch pytorch && \
+    conda clean -t -i -p -y"
 
-# Clone s4pred repo and download the model weights
+# Clone the s4pred repository and download the model weights
 RUN git clone https://github.com/psipred/s4pred /s4pred \
     && cd /s4pred \
     && wget http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/weights.tar.gz \
-    && tar -xvzf weights.tar.gz
+    && tar -xvzf weights.tar.gz \
+    && rm weights.tar.gz
 
-# Add application's source code to the Docker image
+# Add your application's source code to the Docker image
 COPY ./ /app
 WORKDIR /app
 

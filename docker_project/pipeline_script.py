@@ -15,7 +15,6 @@ def run_parser(hhr_file):
     print(f'STEP 4: RUNNING PARSER: {" ".join(cmd)}')
     p = Popen(cmd, stdin=PIPE,stdout=PIPE, stderr=PIPE)
     out, err = p.communicate()
-    print(out)
     print(out.decode("utf-8"))
 
 def run_hhsearch(a3m_file):
@@ -28,7 +27,6 @@ def run_hhsearch(a3m_file):
     print(f'STEP 3: RUNNING HHSEARCH: {" ".join(cmd)}')
     p = Popen(cmd, stdin=PIPE,stdout=PIPE, stderr=PIPE)
     out, err = p.communicate()
-    print(err)
 
 def read_horiz(tmp_file, horiz_file, a3m_file):
     """
@@ -58,7 +56,6 @@ def run_s4pred(input_file, out_file):
     print(f'STEP 1: RUNNING S4PRED: {" ".join(cmd)}')
     p = Popen(cmd, stdin=PIPE,stdout=PIPE, stderr=PIPE)
     out, err = p.communicate()
-    print('err', err)
     with open(out_file, "w") as fh_out:
         fh_out.write(out.decode("utf-8"))
 
