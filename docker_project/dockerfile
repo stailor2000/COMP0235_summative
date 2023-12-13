@@ -1,6 +1,9 @@
 # Use a minimal base image
 FROM ubuntu:latest
 
+# Set the environment variable to avoid tzdata interactive prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Install necessary system dependencies
 RUN apt-get update && apt-get install -y \
     wget \
@@ -20,6 +23,9 @@ RUN mkdir -p ~/miniconda3 \
 # Set environment variables
 ENV PATH /root/miniconda3/bin:$PATH
 
+# Install awscli
+RUN apt-get update && apt-get install -y awscli && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # Create a Conda environment with Python 3.8 and install packages
 RUN conda create -n myenv python=3.8 -y && \
     echo "source activate myenv" > ~/.bashrc && \
@@ -36,7 +42,7 @@ RUN git clone https://github.com/psipred/s4pred /s4pred \
     && tar -xvzf weights.tar.gz \
     && rm weights.tar.gz
 
-# Add application's source code to the Docker image
+# Add your application's source code to the Docker image
 COPY ./ /app
 WORKDIR /app
 
