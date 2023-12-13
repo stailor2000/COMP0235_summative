@@ -3,7 +3,7 @@ from subprocess import Popen, PIPE
 from Bio import SeqIO
 
 """
-usage: python pipeline_script.py INPUT.fasta  
+usage: python pipeline_script.py INPUT.fasta
 approx 5min per analysis
 """
 
@@ -15,19 +15,20 @@ def run_parser(hhr_file):
     print(f'STEP 4: RUNNING PARSER: {" ".join(cmd)}')
     p = Popen(cmd, stdin=PIPE,stdout=PIPE, stderr=PIPE)
     out, err = p.communicate()
+    print(out)
     print(out.decode("utf-8"))
 
 def run_hhsearch(a3m_file):
     """
     Run HHSearch to produce the hhr file
     """
-    cmd = ['/hhsuite/bin/hhsearch',
-           '-i', a3m_file, '-cpu', '1', '-d', 
-           '/data/pdb70/pdb70']
+    cmd = ['hhsearch',
+           '-i', a3m_file, '-cpu', '1', '-d',
+           '/dataset/pdb70']
     print(f'STEP 3: RUNNING HHSEARCH: {" ".join(cmd)}')
     p = Popen(cmd, stdin=PIPE,stdout=PIPE, stderr=PIPE)
     out, err = p.communicate()
-    
+    print(err)
 
 def read_horiz(tmp_file, horiz_file, a3m_file):
     """
@@ -52,15 +53,16 @@ def run_s4pred(input_file, out_file):
     """
     Runs the s4pred secondary structure predictor to produce the horiz file
     """
-    cmd = ['/usr/bin/python3', '/home/dbuchan/Code/s4pred/run_model.py',
+    cmd = ['python', '/s4pred/run_model.py',
            '-t', 'horiz', '-T', '1', input_file]
     print(f'STEP 1: RUNNING S4PRED: {" ".join(cmd)}')
     p = Popen(cmd, stdin=PIPE,stdout=PIPE, stderr=PIPE)
     out, err = p.communicate()
+    print('err', err)
     with open(out_file, "w") as fh_out:
         fh_out.write(out.decode("utf-8"))
 
-    
+
 def read_input(file):
     """
     Function reads a fasta formatted file of protein sequences
@@ -75,7 +77,7 @@ def read_input(file):
 
 
 if __name__ == "__main__":
-    
+
     sequences = read_input(sys.argv[1])
     tmp_file = "tmp.fas"
     horiz_file = "tmp.horiz"

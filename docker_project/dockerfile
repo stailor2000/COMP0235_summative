@@ -1,34 +1,46 @@
-# Use a Python base image
+# Python base image
 FROM python:3.8
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
-    wget \
     git \
-    tar && \
-    pip install numpy pandas biopython scipy
+    tar \
+    bzip2 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Clone the s4pred repository and download the model weights
+# Install Miniconda
+ENV MINICONDA_VERSION 4.10.3
+ENV CONDA_DIR /opt/conda
+ENV PATH $CONDA_DIR/bin:$PATH
+
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-py38_$MINICONDA_VERSION-Linux-x86_64.sh -O ~/miniconda.sh \
+    && /bin/bash ~/miniconda.sh -b -p $CONDA_DIR \
+    && rm ~/miniconda.sh \
+    && conda clean -tipsy \
+    && conda init bash \
+    && . /root/.bashrc
+
+# Install python packages
+RUN conda install -c conda-forge -c bioconda hhsuite
+RUN conda install -c conda-forge biopython
+RUN conda install -c conda-forge numpy
+RUN conda install -c anaconda pandas
+RUN conda install -c anaconda scipy
+RUN conda install -c pytorch pytorch
+
+# Clone s4pred repo and download the model weights
 RUN git clone https://github.com/psipred/s4pred /s4pred \
     && cd /s4pred \
     && wget http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/weights.tar.gz \
     && tar -xvzf weights.tar.gz
 
-# Download and install the static build of HH-suite
-RUN mkdir /hhsuite \
-    && wget https://github.com/soedinglab/hh-suite/releases/download/v3.3.0/hhsuite-3.3.0-SSE2-Linux.tar.gz \
-    && tar xvfz hhsuite-3.3.0-SSE2-Linux.tar.gz -C /hhsuite \
-    && echo "export PATH=/hhsuite/bin:/hhsuite/scripts:$PATH" >> ~/.bashrc
-
-# Set environment variable for HH-suite path (adjust as necessary)
-ENV PATH="/hhsuite/bin:/hhsuite/scripts:${PATH}"
-
-# Add your application's source code to the Docker image
+# Add application's source code to the Docker image
 COPY ./ /app
 WORKDIR /app
 
 # Make your scripts executable
 RUN chmod +x ./pipeline_script.py ./results_parser.py
 
-# Command to run your application (adjust the command as per your requirement)
+# Command to run your application
 CMD ["python", "./pipeline_script.py", "input.fasta"]
