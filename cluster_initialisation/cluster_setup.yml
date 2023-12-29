@@ -1,43 +1,35 @@
 ---
-- name: Configure Kubernetes Cluster
-  hosts: clients
+- name: configure all nodes
+  hosts: all
   become: yes
   tasks:
-    - name: Update all packages
+    - name: update all packages
       ansible.builtin.yum:
         name: "*"
         state: latest
 
-    - name: Install wget, git, and curl packages
+    - name: install wget, git, and curl packages
       ansible.builtin.yum:
         name:
           - wget
           - git
           - curl
+          - tar
+          - bzip2
         state: latest
 
-    - name: Install firewalld
+    - name: install firewalld
       ansible.builtin.yum:
         name: firewalld
         state: present
 
-    - name: Start and enable firewalld
+    - name: start and enable firewalld
       ansible.builtin.systemd:
         name: firewalld
         state: started
         enabled: yes
 
-    - name: Open necessary ports for client nodes for Kubernetes
-      ansible.builtin.firewalld:
-        port: "{{ item }}"
-        state: enabled
-        permanent: yes
-        immediate: yes
-      with_items:
-        - 10250/tcp # Kubelet API
-        - 30000-32767/tcp # NodePort Services
-
-    - name: Open port 22 (SSH) for Ansible on client nodes
+    - name: open port 22 (ssh) for ansible on nodes
       ansible.builtin.firewalld:
         port: "{{ item }}"
         state: enabled
@@ -45,15 +37,3 @@
         immediate: yes
       with_items:
         - 22/tcp
-
-    - name: Disable swap for Kuburnetes
-      ansible.builtin.command:
-        cmd: swapoff -a
-      ignore_errors: true
-
-    - name: Remove swap from /etc/fstab
-      ansible.builtin.lineinfile:
-        path: /etc/fstab
-        regexp: '^([^#].*?\s+swap\s+.*)$'
-        line: '#\1'
-        backrefs: yes

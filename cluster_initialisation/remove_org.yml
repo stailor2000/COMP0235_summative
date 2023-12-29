@@ -1,0 +1,29 @@
+- name: Remove old Miniconda installation
+  hosts: clients
+  become: yes
+  tasks:
+    - name: Remove the Miniconda directory
+      file:
+        path: "/mnt/data/miniconda3"
+        state: absent
+
+    - name: Remove Miniconda from PATH in .bashrc
+      lineinfile:
+        path: "/home/ec2-user/.bashrc"
+        line: 'export PATH="/mnt/data/miniconda3/bin:$PATH"'
+        state: absent
+
+    - name: Undo Conda initialization in .bashrc
+      blockinfile:
+        path: "/home/ec2-user/.bashrc"
+        marker: "# {mark} ANSIBLE MANAGED BLOCK for Conda init"
+        block: ""
+        state: absent
+
+    # Optional: Remove any specific environment variables related to Conda
+    - name: Remove environment variables related to Miniconda
+      lineinfile:
+        path: "/home/ec2-user/.bashrc"
+        regexp: '^export SOME_ENV_VARIABLE='
+        state: absent
+

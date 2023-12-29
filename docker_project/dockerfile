@@ -1,32 +1,32 @@
-# Use a minimal base image
-FROM ubuntu:latest
+# base image
+FROM python:3.8-slim
 
-# Set the environment variable to avoid tzdata interactive prompts
+# avoids tzdata interactive prompts and for Conda
 ENV DEBIAN_FRONTEND=noninteractive
+ENV PATH /root/miniconda3/bin:$PATH
 
-# Install necessary system dependencies
+# set the working directory in the container
+WORKDIR /usr/src/app
+
+# install necessary system dependencies
 RUN apt-get update && apt-get install -y \
     wget \
     git \
     tar \
     bzip2 \
+    awscli \
+    vim \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Miniconda and set up the environment
+# install miniconda and set up the environment
 RUN mkdir -p ~/miniconda3 \
     && wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh \
     && /bin/bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 \
     && rm -rf ~/miniconda3/miniconda.sh \
     && ~/miniconda3/bin/conda init bash
 
-# Set environment variables
-ENV PATH /root/miniconda3/bin:$PATH
-
-# Install awscli
-RUN apt-get update && apt-get install -y awscli && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Create a Conda environment with Python 3.8 and install packages
+# create conda environment and install packages
 RUN conda create -n myenv python=3.8 -y && \
     echo "source activate myenv" > ~/.bashrc && \
     /bin/bash -c "source activate myenv && \
@@ -35,26 +35,21 @@ RUN conda create -n myenv python=3.8 -y && \
     conda install -c pytorch pytorch && \
     conda clean -t -i -p -y"
 
-# Clone the s4pred repository and download the model weights
+# install Ray
+RUN pip install ray
+
+# clone s4pred repository and download model weights
 RUN git clone https://github.com/psipred/s4pred /s4pred \
     && cd /s4pred \
     && wget http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/weights.tar.gz \
     && tar -xvzf weights.tar.gz \
     && rm weights.tar.gz
 
-# Add your application's source code to the Docker image
-COPY ./ /app
-WORKDIR /app
+# copy the current directory contents into the container at /usr/src/app
+COPY . /usr/src/app
 
 # Make your scripts executable
-RUN chmod +x ./pipeline_script.py ./results_parser.py
+#RUN chmod +x ./pipeline_script.py ./results_parser.py
 
-# Copy the entrypoint script and make it executable
-COPY entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
-
-# Set the entrypoint
-ENTRYPOINT ["/app/entrypoint.sh"]
-
-# Default argument
-CMD ["input.fasta"]
+# Expose ports for Ray processes
+EXPOSE 6379 6380 6381 8076 6066 8265 8786

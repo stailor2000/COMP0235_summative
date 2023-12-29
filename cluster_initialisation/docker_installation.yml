@@ -31,3 +31,13 @@
         state: started
         enabled: yes
 
+    - name: Create Docker group
+      group:
+        name: docker
+        state: present
+
+    - name: Add ec2-user to Docker group
+      user:
+        name: ec2-user
+        groups: docker
+        append: yes

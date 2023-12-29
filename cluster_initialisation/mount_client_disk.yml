@@ -1,18 +1,18 @@
 ---
-- name: Mount Additional Disks
+- name: mount additional disks
   hosts: clients
-  become: yes  # Run tasks with sudo
+  become: yes
   tasks:
-    - name: Create a filesystem on the additional disk
+    - name: create filesystem on the additional disk
       command: mkfs -t ext4 /dev/nvme1n1
-      ignore_errors: yes  # Ignore errors if filesystem already exists
+      ignore_errors: yes 
 
-    - name: Create a mount point directory
+    - name: create a mount point directory
       file:
         path: /mnt/data
         state: directory
 
-    - name: Mount the additional disk
+    - name: mount the additional disk
       mount:
         path: /mnt/data
         src: /dev/nvme1n1
@@ -20,7 +20,7 @@
         state: mounted
         opts: defaults
 
-    - name: Add entry to /etc/fstab for permanent mounting
+    - name: add entry to /etc/fstab for permanent mounting
       lineinfile:
         path: /etc/fstab
         line: "/dev/nvme1n1  /mnt/data  ext4  defaults  0 0"

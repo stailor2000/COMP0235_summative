@@ -1,9 +1,0 @@
-host:
-ec2-13-43-158-180.eu-west-2.compute.amazonaws.com
-
-cluster:
-ec2-18-168-191-123.eu-west-2.compute.amazonaws.com
-ec2-18-168-116-192.eu-west-2.compute.amazonaws.com
-ec2-18-135-189-64.eu-west-2.compute.amazonaws.com
-ec2-18-130-30-51.eu-west-2.compute.amazonaws.com
-ec2-13-42-224-49.eu-west-2.compute.amazonaws.com
