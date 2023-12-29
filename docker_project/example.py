@@ -13,5 +13,5 @@ if __name__ == '__main__':
     # NOTE: this is a future. It is a computation that hasn't happened yet
     futures = [square.remote(i) for i in range(n)]
     results = ray.get(futures)
-    
+
     print(results[:5])
