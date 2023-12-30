@@ -1,15 +1,33 @@
-# base image
+# Base image
 FROM python:3.8-slim
 
-# code necessary for Ray to run
-# set the working directory in the container
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PATH /root/miniconda3/bin:$PATH
+
+# Set the working directory in the container
 WORKDIR /usr/src/app
 
-# copy the current directory contents into the container at /usr/src/app
+# Install necessary system dependencies, conda packages, and cleanup in the same layer
+RUN apt-get update && apt-get install -y wget git tar bzip2 awscli \
+    && mkdir -p ~/miniconda3 \
+    && wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh \
+    && /bin/bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 \
+    && rm ~/miniconda3/miniconda.sh \
+    && ~/miniconda3/bin/conda init bash \
+    && conda create -n myenv python=3.8 -y \
+    && echo "source activate myenv" > ~/.bashrc \
+    && /bin/bash -c "source activate myenv && conda install -c conda-forge -c bioconda hhsuite biopython numpy && conda install -c anaconda pandas scipy && conda install -c pytorch pytorch && pip install ray[client] ray[default] && conda clean -t -i -p -y" \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Clone s4pred repository and download model weights
+RUN git clone --depth 1 https://github.com/psipred/s4pred /s4pred \
+    && cd /s4pred \
+    && wget http://bioinfadmin.cs.ucl.ac.uk/downloads/s4pred/weights.tar.gz \
+    && tar -xvzf weights.tar.gz \
+    && rm weights.tar.gz
+
+# Copy the current directory contents into the container at /usr/src/app
 COPY . /usr/src/app
 
-# install Ray
-RUN pip install ray[client]
-
-# expose ports for Ray processes
-EXPOSE 6379 6380 6381 8076 6066 8265 8786

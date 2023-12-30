@@ -1,0 +1,40 @@
+- name: Reconfigure Docker Storage on RHEL Worker Nodes
+  hosts: clients
+  become: yes
+  vars:
+    new_docker_root: /mnt/data/docker
+
+  tasks:
+    - name: Stop Docker service
+      systemd:
+        name: docker
+        state: stopped
+
+    - name: Move Docker directory to new location
+      command: mv /var/lib/docker "{{ new_docker_root }}"
+      args:
+        creates: "{{ new_docker_root }}"
+
+    - name: Create Docker daemon configuration file
+      copy:
+        dest: /etc/docker/daemon.json
+        content: |
+          {
+            "data-root": "{{ new_docker_root }}"
+          }
+
+    - name: Restart Docker service
+      systemd:
+        name: docker
+        state: restarted
+        daemon_reload: yes
+
+    - name: Verify new Docker Root Dir
+      command: docker info --format '{{"{{"}}.DockerRootDir{{"}}"}}'
+      register: docker_info
+
+    - name: Assert Docker Root Dir
+      assert:
+        that:
+          - docker_info.stdout == new_docker_root
+

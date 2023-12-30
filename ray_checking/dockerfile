@@ -1,0 +1,16 @@
+# base image
+FROM python:3.8-slim
+
+# code necessary for Ray to run
+# set the working directory in the container
+WORKDIR /usr/src/app
+
+# copy the current directory contents into the container at /usr/src/app
+COPY . /usr/src/app
+
+# install Ray
+RUN pip install ray[client]
+RUN pip install ray[default]
+
+# expose ports for Ray processes
+#EXPOSE 6379 6380 6381 8076 6066 8265 8786
