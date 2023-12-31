@@ -24,7 +24,7 @@ while IFS= read -r worker_ip; do
     scp -i "$SSH_KEY" "$FILE_TO_COPY_AND_EXECUTE" "ec2-user@$worker_ip:$FILE_TO_COPY_AND_EXECUTE"
 
     # Use SSH key-based authentication to remotely execute the file on the worker node
-    ssh -n -T -i "$SSH_KEY" "ec2-user@$worker_ip" "bash $FILE_TO_COPY_AND_EXECUTE $host_ip $worker_ip"
+    ssh -n -T -i "$SSH_KEY" "ec2-user@$worker_ip" "bash $FILE_TO_COPY_AND_EXECUTE $host_ip $worker_ip &"
 
     # Check the exit status of the SSH command and handle errors if needed
     if [ $? -ne 0 ]; then
