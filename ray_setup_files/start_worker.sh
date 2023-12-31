@@ -6,8 +6,9 @@ WORKER_IP="$2"
 # Generate a unique container name based on the worker IP
 CONTAINER_NAME="parallel_cw_worker_$WORKER_IP"
 
-docker run -d -p 10000-10050:10000-10050 -v /mnt/data/pdb70/:/dataset --name "$CONTAINER_NAME" stailor2000/data_eng_courswork:latest \
-/bin/bash -c "source /root/miniconda3/bin/activate myenv && \
+docker run -d -p 10000-10050:10000-10050 -v /mnt/data:/mnt/data -v /mnt/data/pdb70/:/dataset --name "$CONTAINER_NAME" stailor2000/data_eng_courswork:latest \
+/bin/bash -c "export RAY_TMPDIR=/mnt/data/ray_tmp && \
+source /root/miniconda3/bin/activate myenv && \
 ray start --block --disable-usage-stats \
 --node-manager-port 10000 \
 --object-manager-port 10001 \
@@ -18,5 +19,5 @@ ray start --block --disable-usage-stats \
 --max-worker-port 10040 \
 --ray-client-server-port 10046 \
 --address='${COORDINATOR_IP}:10006' \
---node-ip-address '${WORKER_IP}'"
-
+--node-ip-address '${WORKER_IP}' \
+--object-store-memory=1000000000"

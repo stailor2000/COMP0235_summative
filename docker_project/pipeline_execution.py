@@ -34,7 +34,8 @@ def data_analysis(protein_id):
     # upload the CSV file to S3
     upload_command = f"aws s3 cp {safe_protein_id}_result.csv s3://comp0235-ucabst7/processing_results/"
     subprocess.run(upload_command, shell=True)
-
+    
+    os.remove(f"{safe_protein_id}_result.csv")      # delete temp csv file
     os.remove(temp_file_path)  # delete the temporary file
 
 
