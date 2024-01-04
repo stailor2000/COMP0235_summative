@@ -8,7 +8,7 @@
         name: "*"
         state: latest
 
-    - name: install wget, git, and curl packages
+    - name: install wget, git, curl, tar and bzip2 packages
       ansible.builtin.yum:
         name:
           - wget
@@ -29,7 +29,7 @@
         state: started
         enabled: yes
 
-    - name: open port 22 (ssh) for ansible on nodes
+    - name: open port 22  on nodes
       ansible.builtin.firewalld:
         port: "{{ item }}"
         state: enabled

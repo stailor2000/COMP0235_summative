@@ -1,14 +1,14 @@
 ---
-- name: Install Docker on RHEL
+- name: install docker on all aws nodes
   hosts: all
   become: yes
   tasks:
-    - name: Uninstall conflicting package podman-docker
+    - name: uninstall podman docker if its on the node
       yum:
         name: podman-docker
         state: absent
 
-    - name: Install required packages
+    - name: install required packages
       yum:
         name: "{{ item }}"
         state: present
@@ -17,26 +17,26 @@
         - device-mapper-persistent-data
         - lvm2
 
-    - name: Add Docker repository
+    - name: add docker repository
       command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 
-    - name: Install Docker
+    - name: install Docker
       yum:
         name: docker-ce
         state: present
 
-    - name: Start and enable Docker service
+    - name: start docker
       systemd:
         name: docker
         state: started
         enabled: yes
 
-    - name: Create Docker group
+    - name: create docker group
       group:
         name: docker
         state: present
 
-    - name: Add ec2-user to Docker group
+    - name: giving ec2-user docker permissions
       user:
         name: ec2-user
         groups: docker

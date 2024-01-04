@@ -1,21 +1,21 @@
-- name: Reconfigure Docker Storage on RHEL Worker Nodes
+- name: change directory of docker to /mnt/data due to extra memory
   hosts: clients
   become: yes
   vars:
     new_docker_root: /mnt/data/docker
 
   tasks:
-    - name: Stop Docker service
+    - name: stop docker
       systemd:
         name: docker
         state: stopped
 
-    - name: Move Docker directory to new location
+    - name: move docker directory
       command: mv /var/lib/docker "{{ new_docker_root }}"
       args:
         creates: "{{ new_docker_root }}"
 
-    - name: Create Docker daemon configuration file
+    - name: create docker daemon config file
       copy:
         dest: /etc/docker/daemon.json
         content: |
@@ -23,17 +23,17 @@
             "data-root": "{{ new_docker_root }}"
           }
 
-    - name: Restart Docker service
+    - name: restart docker
       systemd:
         name: docker
         state: restarted
         daemon_reload: yes
 
-    - name: Verify new Docker Root Dir
+    - name: verify new docker root dir
       command: docker info --format '{{"{{"}}.DockerRootDir{{"}}"}}'
       register: docker_info
 
-    - name: Assert Docker Root Dir
+    - name: assert docker root dir
       assert:
         that:
           - docker_info.stdout == new_docker_root
