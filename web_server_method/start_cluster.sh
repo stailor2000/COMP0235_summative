@@ -1,14 +1,30 @@
 #!/bin/bash
 
-# coordinator internal ip address
+# cmd line inputs
 inputs_txt_file="$1"
 COORDINATOR_IP_EXTERNAL="$2"
+RESET_FLAG="$3"  # Optional third argument for reset flag
 
+# check if the coordinator IP is provided as an argument
+if [ -z "$COORDINATOR_IP_EXTERNAL" ]; then
+  echo "Usage: $0 <inputs_txt_file> <COORDINATOR_IP_EXTERNAL> [--reset]"
+  exit 1
+fi
 
+# create  the coordinator command
+COORDINATOR_CMD="nohup python coordinator.py $inputs_txt_file"
+
+# check if reset flag is provided
+if [ "$RESET_FLAG" == "--reset" ]; then
+  COORDINATOR_CMD+=" --reset"
+fi
 
 # start coordinator.py on host node
-nohup coordinator.py ${inputs_txt_file} > output.log 2>&1 &
+$COORDINATOR_CMD > output.log 2>&1 &
 
+echo "Starting coordinator with command: $COORDINATOR_CMD"
+
+sleep 120 # allow all inputs to be loaded into the queue
 
 
 
