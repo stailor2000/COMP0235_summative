@@ -19,3 +19,10 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: ['10.0.13.19:9100', '10.0.1.252:9100', '10.0.9.203:9100', '10.0.5.216:9100', '10.0.10.85:9100']
+
+  - job_name: 'worker_nodes metrics'   # node exporter for worker nodes
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['10.0.13.19:8001', '10.0.1.252:8001', '10.0.9.203:8001', '10.0.5.216:8001', '10.0.10.85:8001']
+
+

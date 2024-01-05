@@ -24,7 +24,7 @@ $COORDINATOR_CMD > output.log 2>&1 &
 
 echo "Starting coordinator with command: $COORDINATOR_CMD"
 
-sleep 120 # allow all inputs to be loaded into the queue
+sleep 60 # allow all inputs to be loaded into the queue
 
 
 

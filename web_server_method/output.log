@@ -1,0 +1,74 @@
+Deleted files matching pending_tasks.db*
+Deleted files matching succeeded_tasks.db*
+Deleted files matching failed_tasks.db*
+Deleted files matching retry_counter.db*
+ * Serving Flask app 'coordinator'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8000
+ * Running on http://10.0.3.37:8000
+Press CTRL+C to quit
+13.42.224.49 - - [05/Jan/2024 00:47:12] "GET /next_task HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:47:12] "GET /next_task HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:47:12] "GET /next_task HTTP/1.1" 200 -
+18.168.191.123 - - [05/Jan/2024 00:48:22] "GET /next_task HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:48:43] "POST /mark_done HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:48:43] "POST /mark_done HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:48:43] "GET /next_task HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:48:43] "GET /next_task HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:48:46] "POST /mark_done HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:48:46] "GET /next_task HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:49:06] "POST /mark_done HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:49:06] "GET /next_task HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:49:07] "POST /mark_done HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:49:07] "GET /next_task HTTP/1.1" 200 -
+18.168.116.192 - - [05/Jan/2024 00:49:32] "GET /next_task HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:50:16] "POST /mark_done HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:50:16] "GET /next_task HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:50:23] "POST /mark_done HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:50:23] "GET /next_task HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:50:26] "POST /mark_done HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:50:26] "GET /next_task HTTP/1.1" 200 -
+18.168.191.123 - - [05/Jan/2024 00:50:28] "POST /mark_done HTTP/1.1" 200 -
+18.168.191.123 - - [05/Jan/2024 00:50:28] "GET /next_task HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:50:34] "POST /mark_done HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:50:34] "GET /next_task HTTP/1.1" 200 -
+18.168.116.192 - - [05/Jan/2024 00:50:35] "POST /mark_done HTTP/1.1" 200 -
+18.168.116.192 - - [05/Jan/2024 00:50:35] "GET /next_task HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:50:38] "POST /mark_done HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:50:38] "GET /next_task HTTP/1.1" 200 -
+18.135.189.64 - - [05/Jan/2024 00:50:41] "GET /next_task HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:50:50] "POST /mark_done HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:50:50] "GET /next_task HTTP/1.1" 200 -
+18.130.30.51 - - [05/Jan/2024 00:51:49] "GET /next_task HTTP/1.1" 200 -
+18.168.116.192 - - [05/Jan/2024 00:51:54] "POST /mark_done HTTP/1.1" 200 -
+18.168.116.192 - - [05/Jan/2024 00:51:54] "GET /next_task HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:52:02] "POST /mark_done HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:52:02] "GET /next_task HTTP/1.1" 200 -
+18.168.116.192 - - [05/Jan/2024 00:53:00] "POST /mark_done HTTP/1.1" 200 -
+18.168.116.192 - - [05/Jan/2024 00:53:00] "GET /next_task HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:53:20] "POST /mark_done HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:53:20] "GET /next_task HTTP/1.1" 200 -
+18.135.189.64 - - [05/Jan/2024 00:53:23] "POST /mark_done HTTP/1.1" 200 -
+18.135.189.64 - - [05/Jan/2024 00:53:23] "GET /next_task HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:53:30] "POST /mark_done HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:53:30] "GET /next_task HTTP/1.1" 200 -
+18.130.30.51 - - [05/Jan/2024 00:53:32] "POST /mark_done HTTP/1.1" 200 -
+18.130.30.51 - - [05/Jan/2024 00:53:32] "GET /next_task HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:53:50] "POST /mark_done HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:53:50] "GET /next_task HTTP/1.1" 200 -
+18.168.116.192 - - [05/Jan/2024 00:54:24] "POST /mark_done HTTP/1.1" 200 -
+18.168.116.192 - - [05/Jan/2024 00:54:24] "GET /next_task HTTP/1.1" 200 -
+18.130.30.51 - - [05/Jan/2024 00:54:50] "POST /mark_done HTTP/1.1" 200 -
+18.130.30.51 - - [05/Jan/2024 00:54:50] "GET /next_task HTTP/1.1" 200 -
+18.135.189.64 - - [05/Jan/2024 00:54:58] "POST /mark_done HTTP/1.1" 200 -
+18.135.189.64 - - [05/Jan/2024 00:54:58] "GET /next_task HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:55:26] "POST /mark_done HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:55:26] "GET /next_task HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:55:26] "POST /mark_done HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:55:26] "GET /next_task HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:55:39] "POST /mark_done HTTP/1.1" 200 -
+13.42.224.49 - - [05/Jan/2024 00:55:39] "GET /next_task HTTP/1.1" 200 -
+18.168.191.123 - - [05/Jan/2024 00:56:40] "POST /mark_done HTTP/1.1" 200 -
+18.168.191.123 - - [05/Jan/2024 00:56:40] "GET /next_task HTTP/1.1" 200 -
