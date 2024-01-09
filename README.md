@@ -67,7 +67,7 @@ ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_cluster -N ""
 ```bash
 cd ~/summative_work
 ```
-- Initiate the deployment process by executing `deploy.sh`. Replace `<ucl_username_s3_bucket>` with your UCL username formatted like `ucabst7` and `<host_ip_internal>` with the internal IP address of your host node, `<inputs_file>` with your txt file with your protein IDs and use `--reset` if you want to reset the persistent queues:
+- Initiate the deployment process by executing `deploy.sh`. Replace `<ucl_username_s3_bucket>` with your UCL username formatted like `ucabst7` and `<host_ip_internal>` with the internal IP address of your host node, `<inputs_file>` with your txt file with your protein IDs, the `experiment_ids.txt` is located at `~/summative_work/coursework_docs/experiment_ids.txt` and use `--reset` if you want to reset the persistent queues:
 ```bash
 ./deploy.sh <ucl_username_s3_bucket> <host_ip_internal> <inputs_file> [--reset]
 ```
