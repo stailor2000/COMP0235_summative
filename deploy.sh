@@ -34,7 +34,7 @@ ansible-playbook -i inventory.ini ./cluster_initialisation/download_pdb70.yml --
 # executes change_docker_directory.yml playbook
 ansible-playbook -i inventory.ini ./cluster_initialisation/change_docker_directory.yml --private-key=~/.ssh/id_cluster
 
-#open port for flask web server
+#open port for flask web server and prometheus etc
 sudo firewall-cmd --zone=public --add-port=8000/tcp --permanent # open port for flask
 sudo firewall-cmd --zone=public --add-port=9090/tcp --permanent # open port for prometheus
 sudo firewall-cmd --zone=public --add-port=3000/tcp --permanent # open port for grafana

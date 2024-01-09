@@ -32,15 +32,6 @@ echo "Installing Node Exporter on Host..."
 # installing node exporter on worker nodes
 while IFS= read -r worker_ip; do
     echo "Installing Node Exporter on worker node: $worker_ip"
-
-     # ports to be opened on the worker nodes
-    OPEN_PORTS_COMMANDS="sudo firewall-cmd --zone=public --add-port=8000/tcp --permanent; \
-                        sudo firewall-cmd --zone=public --add-port=9100/tcp --permanent; \
-                        sudo firewall-cmd --zone=public --add-port=80/tcp --permanent; \
-                        sudo firewall-cmd --reload;"
-
-    # openes the ports
-    ssh -n -T -i "$SSH_KEY" "ec2-user@$worker_ip" "$OPEN_PORTS_COMMANDS"
     
     # copy install_node_exporter.sh to the worker node
     scp -i "$SSH_KEY" "$FILE_TO_COPY_AND_EXECUTE" "ec2-user@$worker_ip:$FILE_TO_COPY_AND_EXECUTE"
