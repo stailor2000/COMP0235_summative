@@ -12249,3 +12249,28 @@ Press CTRL+C to quit
 23.239.9.19 - - [09/Jan/2024 18:04:42] code 400, message Bad request syntax ('\x01I20100')
 23.239.9.19 - - [09/Jan/2024 18:04:42] "\x01I20100" HTTPStatus.BAD_REQUEST -
 87.236.176.178 - - [09/Jan/2024 18:11:22] "GET / HTTP/1.1" 404 -
+----------------------------------------
+Exception occurred during processing of request from ('104.152.52.221', 52701)
+Traceback (most recent call last):
+  File "/usr/lib64/python3.9/socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib64/python3.9/socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib64/python3.9/socketserver.py", line 747, in __init__
+    self.handle()
+  File "/usr/lib64/python3.9/wsgiref/simple_server.py", line 118, in handle
+    self.raw_requestline = self.rfile.readline(65537)
+  File "/usr/lib64/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+103.45.246.23 - - [09/Jan/2024 20:39:08] code 400, message Bad HTTP/0.9 request type ('\x16\x03\x01\x00u\x01\x00\x00q\x03\x03ibê¾')
+103.45.246.23 - - [09/Jan/2024 20:39:08] "\x16\x03\x01\x00u\x01\x00\x00q\x03\x03ibê¾\x1e\x02ÂóPÇßhÈ" HTTPStatus.BAD_REQUEST -
+103.203.57.20 - - [09/Jan/2024 20:51:28] "GET / HTTP/1.1" 404 -
+165.227.71.135 - - [09/Jan/2024 22:12:29] code 400, message Bad request version ('+\x8c\x8f/\x17ÛD')
+165.227.71.135 - - [09/Jan/2024 22:12:29] "\x16\x03\x01\x00{\x01\x00\x00w\x03\x03Ì?b&Ô;7{=£§\x9f\x85\x968ON\x8cN\x1d+\x8c\x8f/\x17ÛD" HTTPStatus.BAD_REQUEST -
+165.227.71.135 - - [09/Jan/2024 22:12:30] code 400, message Bad request version ('À\x14À')
+165.227.71.135 - - [09/Jan/2024 22:12:30] "\x16\x03\x01\x00{\x01\x00\x00w\x03\x03\x9a\x06xÂsfP%"á\x0b\x9fîJs\x8e\x03zY',j}®wÒ!²R+g6\x00\x00\x1aÀ/À+À\x11À\x07À\x13À\x09À\x14À" HTTPStatus.BAD_REQUEST -
+165.227.71.135 - - [09/Jan/2024 22:12:30] "GET / HTTP/1.1" 404 -
+165.227.71.135 - - [09/Jan/2024 22:12:30] code 400, message Bad request version ('À\x14À')
+165.227.71.135 - - [09/Jan/2024 22:12:30] "\x16\x03\x01\x00{\x01\x00\x00w\x03\x03@ÉQIó2\x142>ý-ëc\x8d\x81Ì\x1e¤®ð'haÛÍzþf_~ô\x0f\x00\x00\x1aÀ/À+À\x11À\x07À\x13À\x09À\x14À" HTTPStatus.BAD_REQUEST -
