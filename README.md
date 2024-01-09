@@ -61,7 +61,7 @@ ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_cluster -N ""
 
 ### 2. Deployment Instructions
 
-##### 2.1. Starting the Deployment Process
+#### 2.1. Starting the Deployment Process
 
 - Open a terminal and change your current directory to `~/summative_work`:
 ```bash
@@ -72,7 +72,7 @@ cd ~/summative_work
 ./deploy.sh <ucl_username_s3_bucket> <host_ip_internal> <inputs_file> [--reset]
 ```
 
-##### 2.1. Understanding the `deploy.sh` Script
+#### 2.2. Understanding the `deploy.sh` Script
 - This script triggers a series of Ansible playbooks located in `~/summative_work/cluster_initialisation`:
 
     - `ssh_key_setup.yml`: Distributes the newly created SSH key across client nodes.
@@ -85,7 +85,7 @@ cd ~/summative_work
 - It opens ports on the host node required for Flask, Prometheus, Grafana and Node Exporter.
 - It executes `./setup_monitoring_logging/./install_all.sh` which installs Prometheus, Grafana and node exporter on the host node, and node exporter on all the client nodes.
 
-##### 2.3. Deploying the Data Analysis Pipeline
+#### 2.3. Deploying the Data Analysis Pipeline
 
 - `deploy.sh` finally executes `./web_server_method/start_cluster.sh`, which initializes the `./web_server_method/coordinator.py` python script to start the host node, and then deploys the docker container on the client nodes to connect them to the cluster.
 - Once `deploy.sh` is complete the cluster is running and has started completing tasks.
