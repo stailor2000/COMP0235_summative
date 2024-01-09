@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y wget git tar bzip2 awscli \
     && ~/miniconda3/bin/conda init bash \
     && conda create -n myenv python=3.8 -y \
     && echo "source activate myenv" > ~/.bashrc \
-    && /bin/bash -c "source activate myenv && conda install -c conda-forge -c bioconda hhsuite biopython numpy && conda install -c anaconda pandas scipy && conda install -c pytorch pytorch && pip install requests && conda clean -t -i -p -y" \
+    && /bin/bash -c "source activate myenv && conda install -c conda-forge -c bioconda hhsuite biopython numpy && conda install -c anaconda pandas scipy && conda install -c pytorch pytorch && pip install requests prometheus_client && conda clean -t -i -p -y" \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -31,5 +31,5 @@ RUN git clone --depth 1 https://github.com/psipred/s4pred /s4pred \
 # Copy the current directory contents into the container at /usr/src/app
 COPY . /usr/src/app
 
-# Set the entry point to execute the script
-ENTRYPOINT ["python", "worker.py"]
+# Set the entry point to activate the conda environment and execute the script
+ENTRYPOINT ["/bin/bash", "-c", "source /root/miniconda3/bin/activate myenv && exec python worker.py \"$@\"", "--"]
