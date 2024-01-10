@@ -34,7 +34,7 @@ ansible-playbook -i inventory.ini ./cluster_initialisation/docker_installation.y
 ansible-playbook -i inventory.ini ./cluster_initialisation/mount_client_disk.yml --private-key=~/.ssh/id_cluster
 
 # executed downloaidng pdb70 to mounted disk on worker nodes playbook
-ansible-playbook -i inventory.ini ./cluster_initialisation/download_pdb70.yml --private-key=~/.ssh/id_cluster
+./cluster_initialisation/download_pdb70.sh
 
 # executes change_docker_directory.yml playbook
 ansible-playbook -i inventory.ini ./cluster_initialisation/change_docker_directory.yml --private-key=~/.ssh/id_cluster
