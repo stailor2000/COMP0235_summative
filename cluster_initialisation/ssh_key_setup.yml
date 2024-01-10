@@ -4,6 +4,7 @@
   become: yes
   vars:
     new_public_key: ~/.ssh/id_cluster.pub
+    ansible_user: ec2-user
 
   tasks:
     - name: ensure .ssh directory exists

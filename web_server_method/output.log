@@ -12274,3 +12274,14 @@ ConnectionResetError: [Errno 104] Connection reset by peer
 165.227.71.135 - - [09/Jan/2024 22:12:30] "GET / HTTP/1.1" 404 -
 165.227.71.135 - - [09/Jan/2024 22:12:30] code 400, message Bad request version ('À\x14À')
 165.227.71.135 - - [09/Jan/2024 22:12:30] "\x16\x03\x01\x00{\x01\x00\x00w\x03\x03@ÉQIó2\x142>ý-ëc\x8d\x81Ì\x1e¤®ð'haÛÍzþf_~ô\x0f\x00\x00\x1aÀ/À+À\x11À\x07À\x13À\x09À\x14À" HTTPStatus.BAD_REQUEST -
+64.62.197.58 - - [10/Jan/2024 01:10:55] "GET / HTTP/1.1" 404 -
+64.62.197.57 - - [10/Jan/2024 01:11:13] "GET /favicon.ico HTTP/1.1" 404 -
+64.62.197.50 - - [10/Jan/2024 01:11:18] "GET http://api.ipify.org/?format=json HTTP/1.1" 404 -
+45.143.200.14 - - [10/Jan/2024 01:38:00] code 400, message Bad HTTP/0.9 request type ('\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie:')
+45.143.200.14 - - [10/Jan/2024 01:38:00] "\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr" HTTPStatus.BAD_REQUEST -
+198.235.24.3 - - [10/Jan/2024 03:08:24] "GET / HTTP/1.1" 404 -
+192.241.225.20 - - [10/Jan/2024 03:36:43] code 400, message Bad request syntax ('MGLNDD_13.43.158.180_8000')
+192.241.225.20 - - [10/Jan/2024 03:36:43] "MGLNDD_13.43.158.180_8000" HTTPStatus.BAD_REQUEST -
+34.78.249.41 - - [10/Jan/2024 07:25:24] "GET / HTTP/1.1" 404 -
+205.210.31.143 - - [10/Jan/2024 08:49:03] "GET / HTTP/1.1" 404 -
+137.184.255.50 - - [10/Jan/2024 12:35:22] "GET / HTTP/1.1" 404 -

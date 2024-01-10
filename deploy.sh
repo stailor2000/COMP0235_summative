@@ -15,10 +15,14 @@ cd ~/summative_work
 pip install Flask prometheus_client litequeue sqlitedict
 
 
+# create cluster ssh key
+ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_cluster -N ""
+
+
 # executes the ansible playbooks
 
 # executes ssh key setup playbook
-ansible-playbook -i inventory.ini ./cluster_initialisation/ssh_key_setup.yml --private-key=~/.ssh/id_cluster
+ansible-playbook -i inventory.ini ./cluster_initialisation/ssh_key_setup.yml --private-key=~/lecturer_key
 
 # executes cluster_setup playbook
 ansible-playbook -i inventory.ini ./cluster_initialisation/cluster_setup.yml --private-key=~/.ssh/id_cluster

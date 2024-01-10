@@ -2,6 +2,7 @@
 
 COORDINATOR_IP="$1"
 
+mkdir -p /mnt/data/logs/
 
 # Generate a unique container name based on the worker IP
 CONTAINER_NAME="parallel_cw_worker"
