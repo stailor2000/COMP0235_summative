@@ -6,7 +6,7 @@
 This guide is designed to provide instructions on deploying a distributed pipeline that uses a web server to parallelize task processing for predicting protein structures. Each section contains a detailed explanation of the steps involved, followed by specific command-line instructions. These instructions are essential for setting up and executing a distributed data analysis system aimed at protein structure prediction. The pipeline is initially configured for 6 AWS nodes, comprising 1 host node and 5 client nodes. However, it can be scaled to accommodate more nodes if needed.
 
 ### 1. SSH Key Generation
-- On your local machine, create a new key pair called `student_aws_key` to gain access to your host node, and then copy it over using the already known lecturer_key.
+- On your local machine, create a new key pair called `student_aws_key` to gain access to your host node, and then copy it over using the already known lecturer_key. Replace `host_ip` with your host node's external IP address.
 
 ```bash
 ssh-keygen -t rsa -b 4096 -f ~/.ssh/student_aws_key -N ""
